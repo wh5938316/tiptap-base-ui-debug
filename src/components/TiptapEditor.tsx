@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { PopoverNode } from './tiptap-plugins';
+import { PopoverNode, ScrollareaNode, SelectNode } from './tiptap-plugins';
 
 interface TiptapEditorProps {
   content?: string;
@@ -13,6 +13,8 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content = '', onChan
     extensions: [
       StarterKit,
       PopoverNode,
+      ScrollareaNode,
+      SelectNode,
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -32,6 +34,24 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content = '', onChan
       editor.chain().focus().insertPopoverNode({
         title: 'New Popover',
         content: 'This is a new popover content. Click edit to modify it.'
+      }).run();
+    }
+  };
+
+  const insertScrollareaNode = () => {
+    if (editor) {
+      editor.chain().focus().insertScrollareaNode({
+        title: 'New Scrollarea',
+        content: 'This is a new scrollarea content. Click edit to modify it.'
+      }).run();
+    }
+  };
+
+  const insertSelectNode = () => {
+    if (editor) {
+      editor.chain().focus().insertSelectNode({
+        title: 'New Select',
+        content: 'This is a new select content. Click edit to modify it.'
       }).run();
     }
   };
@@ -57,6 +77,26 @@ export const TiptapEditor: React.FC<TiptapEditorProps> = ({ content = '', onChan
           }}
         >
           Add Popover
+        </button>
+        <button
+          onClick={insertScrollareaNode}
+          className='bg-red-500'
+          style={{
+            padding: '8px 12px',
+            color: 'white',
+          }}
+        >
+          Add Scrollarea
+        </button>
+        <button
+          onClick={insertSelectNode}
+          style={{
+            padding: '8px 12px',
+            backgroundColor: '#10b981',
+            color: 'white',
+          }}
+        >
+          Add Select
         </button>
       </div>
       <EditorContent editor={editor} />
